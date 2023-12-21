@@ -1,0 +1,48 @@
+**Classes :**
+
+1. **Utilisateur**
+   - Attributs :
+     - `idUtilisateur: int`
+     - `nom: String`
+     - `prenom: String`
+     - `email: String`
+     - `motDePasse: String`
+   - Méthodes :
+     - `authentifier(): boolean`
+     - `rechercherTaxi(): List<Taxi>`
+     - `reserverTaxi(taxi: Taxi): Reservation`
+     - `annulerReservation(reservation: Reservation): void`
+     - `consulterHistorique(): List<Reservation>`
+
+2. **Taxi**
+   - Attributs :
+     - `idTaxi: int`
+     - `matricule: String`
+     - `marque: String`
+     - `modele: String`
+     - `positionActuelle: Coordonnee`
+   - Méthodes :
+     - `accepterReservation(reservation: Reservation): boolean`
+     - `terminerCourse(): void`
+
+3. **Reservation**
+   - Attributs :
+     - `idReservation: int`
+     - `utilisateur: Utilisateur`
+     - `taxi: Taxi`
+     - `etat: EtatReservation`
+   - Méthodes :
+     - `confirmerReservation(): void`
+     - `annuler(): void`
+
+4. **Coordonnee**
+   - Attributs :
+     - `latitude: double`
+     - `longitude: double`
+
+5. **EtatReservation**
+   - Enumération :
+     - `EN_ATTENTE`
+     - `CONFIRMEE`
+     - `ANNULEE`
+     - `TERMINEE`
