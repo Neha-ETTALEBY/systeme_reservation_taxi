@@ -1,6 +1,7 @@
 package DAO;
 
 import metier.Taxi;
+import  java.util.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -63,5 +64,61 @@ public class ITaxiDAOImplement implements ITaxiDAO {
             e.printStackTrace();
         }
         return t;
+    }
+
+    @Override
+    public List <Taxi> SelectTaxisDispo() {
+        Connection conn=null;
+        PreparedStatement ps=null;
+        ResultSet rs =null;
+        Taxi t=new Taxi();
+        List <Taxi> taxis=new ArrayList<>();
+        try{
+            conn=ConnectionDB.getConnexion();
+            String sql= "SELECT * FROM taxi WHERE status = ?";
+            ps=conn.prepareStatement(sql);
+            ps.setString(1,"Disponible");
+            rs=ps.executeQuery();
+            while(rs.next())
+            {
+                t.setMatricule(rs.getString("matricule"));
+                t.setModele(rs.getString("modele"));
+                t.setStatus(rs.getString("status"));
+                taxis.add(t);
+            }
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return taxis;
+    }
+    public void UpdateTaxiStatus(Taxi t,String status)//modifie le status du taxi après la fin du reservation
+    {
+        Connection conn=null;
+        PreparedStatement ps=null;
+        try{
+            conn=ConnectionDB.getConnexion();
+            String sql= "UPDATE taxi SET status=? WHERE matricule=?";
+            ps=conn.prepareStatement(sql);
+            ps.setString(1,status);
+            ps.setString(2,t.getMatricule());
+            int ligne=ps.executeUpdate();
+            if(ligne>0)
+            {
+                System.out.println("modified");
+            }
+            else {
+                System.out.println("modif failed");
+            }
+
+
+
+
+
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 }

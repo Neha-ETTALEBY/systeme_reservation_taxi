@@ -146,4 +146,37 @@ public class IConducteurDAOImplement implements IConducteurDAO{
         }
         return c;
     }
+
+    @Override
+    public Conducteur SelectConducteurOfTaxi(Taxi taxi) {
+
+        Connection connection;
+        PreparedStatement statement;
+        ResultSet rs;
+        Conducteur c=new Conducteur();
+        try
+        {
+            connection = ConnectionDB.getConnexion();
+            String sql = "SELECT * FROM conducteur WHERE matricule=?";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1,taxi.getMatricule());
+            rs = statement.executeQuery();
+            while(rs.next())
+            {
+                c.setNom(rs.getString("nom"));
+                c.setPrenom(rs.getString("prenom"));
+                c.setTelephone(rs.getString("telephone"));
+                c.setEmail(rs.getString("email"));
+                c.setTaxi(taxi);
+            }
+
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+
+        }
+
+        return  c;
+    }
 }
