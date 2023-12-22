@@ -1,6 +1,7 @@
 package metier;
 
 import java.sql.Date;
+import java.sql.Time;
 
 public class Reservation {
     private Client client;
@@ -11,15 +12,22 @@ public class Reservation {
     private  double tarif;
     private String typePaiement; //à verifier son type
 
-    private String date;
-    private String heure ;
+    private Date date;
+    private Time heure ;
 
     public Reservation () { }
-    public Reservation(String lieuSource, String lieuDestination, double tarif) {
+
+    public Reservation(Client client, Conducteur conducteur,  String lieuSource, String lieuDestination, double tarif, String typePaiement, Date date, Time heure) {
+        this.client = client;
+        this.conducteur = conducteur;
         this.lieuSource = lieuSource;
         this.lieuDestination = lieuDestination;
         this.tarif = tarif;
+        this.typePaiement = typePaiement;
+        this.date = date;
+        this.heure = heure;
     }
+
     // getters-------------
     public String getLieuSource() {
         return lieuSource;
@@ -75,32 +83,34 @@ public class Reservation {
         this.conducteur = idConducteur;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
-    public String getHeure() {
+    public Time getHeure() {
         return heure;
     }
 
-    public void setHeure(String heure) {
+    public void setHeure(Time heure) {
         this.heure = heure;
     }
 
     @Override
     public String toString() {
         return "Reservation{" +
-                "idClient=" + client.toString() +"\n"+
-                ", idConducteur=" + conducteur.toString() +"\n"+
+                "client=" + client.toString() +
+                ", conducteur=" + conducteur.toString() +
                 ", id=" + id +
                 ", lieuSource='" + lieuSource + '\'' +
                 ", lieuDestination='" + lieuDestination + '\'' +
                 ", tarif=" + tarif +
                 ", typePaiement='" + typePaiement + '\'' +
+                ", date=" + date +
+                ", heure=" + heure +
                 '}';
     }
 }

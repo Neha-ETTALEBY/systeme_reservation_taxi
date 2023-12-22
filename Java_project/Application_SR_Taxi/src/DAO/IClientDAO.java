@@ -7,4 +7,5 @@ public interface IClientDAO extends IPersonneDAO{
     //public void donnerAvis(Reservation t);
     public Client SelectClientParId(int id);
     public int SelectIdOfClient( Client  c);
+    public void  InsererClient (Client c);
 }

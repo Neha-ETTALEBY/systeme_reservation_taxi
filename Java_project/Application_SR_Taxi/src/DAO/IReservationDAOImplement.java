@@ -81,7 +81,7 @@ public class IReservationDAOImplement implements IReservationDAO{
                  R.setId(rs.getInt("idReservation"));
                  R.setClient(client);
                  //***** obtenir le conducteur a partir de son id ///
-                 int id=rs.getInt("idConduteur");
+                 int id=rs.getInt("idConducteur");
                  IConducteurDAO idcond=new IConducteurDAOImplement();
                  Conducteur conducteur=new Conducteur();
                  conducteur =idcond.SelectConductParId(id);
@@ -106,22 +106,25 @@ public class IReservationDAOImplement implements IReservationDAO{
         ResultSet rs=null;
         try{
             conn = ConnectionDB.getConnexion();
-            String sql = "INSERT INTO reservation (lieuSource,lieuDestination,typePaiement,tarif,date,heure,idClient,idConducteur,matricule  VALUES (?,?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO reservation (lieuSource,lieuDestination,typePaiement,tarif,date,heure,idClient,idConducteur,matricule ) VALUES (?,?,?,?,?,?,?,?,?)";
             ps = conn.prepareStatement(sql);
             ps.setString(1,r.getLieuSource());
             ps.setString(2,r.getLieuDestination());
             ps.setString(3,r.getTypePaiement());
             ps.setDouble(4,r.getTarif());
-            ps.setString(5,r.getDate());
-            ps.setString(6,r.getHeure());
-            ps.setInt(7,r.getClient().getId());
-            ps.setInt(8,r.getConducteur().getId());
-            ps.setString(9,r.getConducteur().getTaxi().getMatricule());
-           if(ps.executeUpdate() >0)
+            ps.setDate(5,r.getDate());
+            ps.setTime(6,r.getHeure());
+            IClientDAO e=new IClientDAOImplement();
+            ps.setInt(7,e.SelectIdOfClient(r.getClient()));//ici on cherche le client  dans BD s il existe  et on retourne son id
+            IConducteurDAO cond=new IConducteurDAOImplement();
+            ps.setInt(8,cond.SelectIdOfConducteur(r.getConducteur()));//ici on cherche le conducteur  dans BD s il existe  et on retourne son id
+            ps.setString(9,r.getConducteur().getTaxi().getMatricule());//la meme chose ici
+            int l=ps.executeUpdate();
+           if( l>0)
            {
-               System.out.println("Insertion réussie.");
+               System.out.println("Insertion du reservation réussie.");
            }else {
-               System.out.println("Insertion echoué.");
+               System.out.println("Insertion du reservation echoué.");
            }
 
 

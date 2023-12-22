@@ -19,7 +19,6 @@ public class Conducteur extends Personne{
     public String toString() {
         return "Conducteur{" +
                 "taxi=" + taxi.toString() +
-                ", nbr=" + nbr +
                 ", nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
                 ", telephone='" + telephone + '\'' +

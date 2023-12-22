@@ -1,6 +1,7 @@
 package DAO;
 
 import metier.Client;
+import metier.Taxi;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,7 +25,7 @@ public class IClientDAOImplement implements  IClientDAO{
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                cl.setIdClient(id);
+                cl.setId(id);
                 cl.setNom(resultSet.getString("nom"));
                 cl.setPrenom(resultSet.getString("prenom"));
                 cl.setTelephone(resultSet.getString("telephone"));
@@ -70,5 +71,37 @@ public class IClientDAOImplement implements  IClientDAO{
             }
 
          return  x;
+    }
+
+    @Override
+    public void InsererClient(Client c) {
+        Connection conn=null;
+        PreparedStatement ps =null;
+        try{
+            conn=ConnectionDB.getConnexion();
+            conn = ConnectionDB.getConnexion();
+            String sql = "INSERT INTO client (nom,prenom,email,telephone)  VALUES (?,?,?,?)";
+            ps = conn.prepareStatement(sql);
+            //insertion
+            ps.setString(1,c.getNom());
+            ps.setString(2,c.getPrenom());
+            ps.setString(3,c.getEmail());
+            ps.setString(4,c.getTelephone());
+            int insertion_reussie=ps.executeUpdate();
+            if(insertion_reussie>0)
+            {
+                System.out.println("insertion du client reussie");
+            }
+            else
+            {
+                System.out.println("insertion du client echoue");
+
+            }
+
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+
     }
 }

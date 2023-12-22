@@ -39,4 +39,29 @@ public class ITaxiDAOImplement implements ITaxiDAO {
 
         return t;
     }
+
+    @Override
+    public Taxi SelectTaxiAleatoire() {
+        Connection conn=null;
+        PreparedStatement ps=null;
+        ResultSet rs =null;
+        Taxi t=new Taxi();
+        try{
+            conn=ConnectionDB.getConnexion();
+            String sql= "SELECT TOP 1 * FROM taxi ORDER BY NEWID()";//pour selectionner un taxi aleatoirement
+             ps=conn.prepareStatement(sql);
+             rs=ps.executeQuery();
+             while(rs.next())
+             {
+                 t.setMatricule(rs.getString("matricule"));
+                 t.setModele(rs.getString("modele"));
+                 t.setStatus(rs.getString("status"));
+             }
+
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return t;
+    }
 }
