@@ -7,6 +7,7 @@ public class Personne {
     protected String prenom;
     protected String telephone;
     protected String email;
+    protected String password;
    public Personne( ){}
     public Personne( String nom, String prenom, String telephone, String email) {
 
@@ -14,6 +15,7 @@ public class Personne {
         this.prenom = prenom;
         this.telephone = telephone;
         this.email = email;
+
     }
     //getters
     public int getId() { return id;}
@@ -33,6 +35,9 @@ public class Personne {
     public String getEmail() {
         return email;
     }
+
+
+
     //setters
     public void setNom(String nom) {
         this.nom = nom;
@@ -53,6 +58,8 @@ public class Personne {
     public  void setId(int id) {
         this.id = id;
     }
+
+
 
     @Override
     public String toString() {

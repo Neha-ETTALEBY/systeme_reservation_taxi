@@ -2,6 +2,7 @@ package DAO;
 
 import metier.Client;
 import metier.Conducteur;
+import metier.GestionReservation;
 import metier.Reservation;
 
 import java.sql.Date;
@@ -9,11 +10,12 @@ import java.sql.Time;
 
 public class MainTestConn {
     public static void main (String [] args){
+        /*
         IReservationDAO R=new IReservationDAOImplement();
         IConducteurDAO e=new IConducteurDAOImplement();
         IClientDAO i =new IClientDAOImplement();
         Conducteur c = new Conducteur();
-        Client client =new Client("maria","geur","06060606","maria@ems.com");
+
         //i.InsererClient(client);
         c=e.SelectConducteurAleatoire();
         Date dateActuelle = new java.sql.Date(System.currentTimeMillis());
@@ -38,6 +40,11 @@ public class MainTestConn {
         // avant d'inserer une reservation il faut que le client soit dans database  ainsi que le conducteur
         //donc je dois ajouter une methode d'insertion du client puis conducteur puis je dois recuperer leur  id
         //pour  que je puisse les inserer dans reservation
-
+*/
+        Client client =new Client("Guer","Maria","123456789","maria.guer@gmail.com","M123@");
+        GestionReservation reserver=new GestionReservation();
+        reserver.effectuerReservation(client,"Dakhla","Jamaa el fna, Marrakech 40000", "Carte Bancaire");
+         //reserver.CalculerTarifEnFctDistance("Carré Eden, Av. Mohammed V, Marrakech 40000");
+         //System.out.println(reserver.calculerDistance("DAKHLA","MARRAKESH")+"km");
     }
 }

@@ -6,7 +6,6 @@ import java.sql.Time;
 public class Reservation {
     private Client client;
     private Conducteur conducteur;
-    private int id;
     private String lieuSource;//à verifier son type
     private String lieuDestination;//à verifier son type
     private  double tarif;
@@ -50,14 +49,10 @@ public class Reservation {
         return conducteur;
     }
 
-    public int getId() {
-        return id;
-    }
+
 
     //setters -----------
-    public void setId(int idreservation) {
-        this.id = idreservation;
-    }
+
 
     public void setLieuSource(String lieuSource) {
         this.lieuSource = lieuSource;
@@ -104,7 +99,6 @@ public class Reservation {
         return "Reservation{" +
                 "client=" + client.toString() +
                 ", conducteur=" + conducteur.toString() +
-                ", id=" + id +
                 ", lieuSource='" + lieuSource + '\'' +
                 ", lieuDestination='" + lieuDestination + '\'' +
                 ", tarif=" + tarif +

@@ -53,12 +53,13 @@ public class IClientDAOImplement implements  IClientDAO{
             try
             {
                 connection = ConnectionDB.getConnexion();
-                String sql = "SELECT idClient FROM client WHERE  nom=? AND prenom=? AND telephone=? AND email=?";
+                String sql = "SELECT idClient FROM client WHERE  nom=? AND prenom=? AND telephone=? AND email=? AND password=?";
                 statement = connection.prepareStatement(sql);
                 statement.setString(1,c.getNom());
                 statement.setString(2,c.getPrenom());
                 statement.setString(3,c.getTelephone());
                 statement.setString(4,c.getEmail());
+                statement.setString(5,c.getPassword());
                 resultSet = statement.executeQuery();
                 while(resultSet.next())
                   x=resultSet.getInt("idClient");
@@ -80,13 +81,14 @@ public class IClientDAOImplement implements  IClientDAO{
         try{
             conn=ConnectionDB.getConnexion();
             conn = ConnectionDB.getConnexion();
-            String sql = "INSERT INTO client (nom,prenom,email,telephone)  VALUES (?,?,?,?)";
+            String sql = "INSERT INTO client (nom,prenom,telephone,email,password)  VALUES (?,?,?,?,?)";
             ps = conn.prepareStatement(sql);
             //insertion
             ps.setString(1,c.getNom());
             ps.setString(2,c.getPrenom());
-            ps.setString(3,c.getEmail());
-            ps.setString(4,c.getTelephone());
+            ps.setString(3,c.getTelephone());
+            ps.setString(4,c.getEmail());
+            ps.setString(5,c.getPassword());
             int insertion_reussie=ps.executeUpdate();
             if(insertion_reussie>0)
             {

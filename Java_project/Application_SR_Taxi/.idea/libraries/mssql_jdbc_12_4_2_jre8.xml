@@ -2,6 +2,8 @@
   <library name="mssql-jdbc-12.4.2.jre8">
     <CLASSES>
       <root url="jar://$USER_HOME$/Downloads/sqljdbc_12.4.2.0_enu/sqljdbc_12.4/enu/jars/mssql-jdbc-12.4.2.jre8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Nouveau dossier/jar_files/gson-2.8.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Nouveau dossier/jar_files (1)/json-20231013.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

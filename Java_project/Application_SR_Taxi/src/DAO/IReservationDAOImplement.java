@@ -32,7 +32,7 @@ public class IReservationDAOImplement implements IReservationDAO{
                 conducteur =c.SelectConductParId(id);
 
                 // remplissage du liste de resevations
-                reservation.setId(resultSet.getInt("idReservation"));
+
                 reservation.setClient(client);
                 reservation.setConducteur(conducteur);
                 reservation.setLieuSource(resultSet.getString("lieuSource"));
@@ -78,7 +78,6 @@ public class IReservationDAOImplement implements IReservationDAO{
              ps.setInt(1,idClient);
              rs=ps.executeQuery();
              while(rs.next()){
-                 R.setId(rs.getInt("idReservation"));
                  R.setClient(client);
                  //***** obtenir le conducteur a partir de son id ///
                  int id=rs.getInt("idConducteur");
