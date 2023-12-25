@@ -105,10 +105,10 @@ public class ITaxiDAOImplement implements ITaxiDAO {
             int ligne=ps.executeUpdate();
             if(ligne>0)
             {
-                System.out.println("modified");
+                System.out.println("modified status reussie");
             }
             else {
-                System.out.println("modif failed");
+                System.out.println("modif status failed");
             }
 
 
