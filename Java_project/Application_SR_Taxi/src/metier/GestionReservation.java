@@ -47,6 +47,7 @@ public class GestionReservation {
         if(Objects.equals(reponse, "y"))
         {
             interRes.InsertReservation(res);
+            //à faire:  ajoutez une colonne affecte a un conducteur  (true / false )
             //ici je dois appeler la methode qui update le status du taxi du dispo vers reserve
             //ainsi je dois calculer la periode  du trajet (donc le taxi est  reserve juste dans cette periode apres on fait update vers dispo)
 

@@ -9,6 +9,8 @@ public class FirstPage extends JFrame {
     private JTextField EmailField;
     private JTextField TelField;
     private JPasswordField PasswordField;
+    private JButton button1;
+    private JButton button2;
 
     public FirstPage()
     {

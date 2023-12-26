@@ -36,7 +36,9 @@ public class Personne {
         return email;
     }
 
-
+    public String getPassword() {
+        return password;
+    }
 
     //setters
     public void setNom(String nom) {
@@ -59,7 +61,9 @@ public class Personne {
         this.id = id;
     }
 
-
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     @Override
     public String toString() {
