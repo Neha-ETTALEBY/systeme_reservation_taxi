@@ -9,7 +9,6 @@ public class IReservationDAOImplement implements IReservationDAO{
     private ResultSet rs = null;
     @Override
     public void getAllReservations() {
-        List<Reservation> reservations = new ArrayList<>();
         conn=null;
         stmt=null;
         rs=null;
@@ -24,6 +23,8 @@ public class IReservationDAOImplement implements IReservationDAO{
 
                 // pour faire le traitement de la recherche des infos des clients et  conducteurs et  taxis pour les stocker dans les attributs de type  Client .... etc
                 // appel a la methode qui fait le traitement de recherche client
+                //resulat souhaité c'est : afficher les reservations avec les infos complet du client et
+                //les infos complet du conducteur ainsi du taxi
                   int id =rs.getInt("idClient");
                   IClientDAO cl =new IClientDAOImplement();
                   Client client=new Client();
@@ -34,22 +35,17 @@ public class IReservationDAOImplement implements IReservationDAO{
                 Conducteur conducteur=new Conducteur();
                 conducteur =c.SelectConductParId(id);
 
-                // remplissage du liste de resevations
-
                 reservation.setClient(client);
                 reservation.setConducteur(conducteur);
                 reservation.setLieuSource(rs.getString("lieuSource"));
                 reservation.setLieuDestination(rs.getString("lieuDestination"));
                 reservation.setTypePaiement(rs.getString("typePaiement"));
                 reservation.setTarif(rs.getDouble("tarif"));
+                reservation.toString();
 
-                reservations.add(reservation);
 
             }
-            for (Reservation e : reservations)
-            {
-               System.out.println(e.toString());
-            }
+
         }
         catch (SQLException e)
         {
@@ -70,7 +66,7 @@ public class IReservationDAOImplement implements IReservationDAO{
              conn=ConnectionDB.getConnexion();
              String sql="SELECT * FROM reservation WHERE idClient=?";
              IClientDAO c=new IClientDAOImplement();
-             idClient=c.SelectIdOfClient(client);// la methode retourne l ID du client entrée dans argument en comparant ses infos avec celles dans la BD
+             idClient=c.getIdFromDB(client);// la methode retourne l ID du client entrée dans argument en comparant ses infos avec celles dans la BD
              stmt=conn.prepareStatement(sql);
              stmt.setInt(1,idClient);
              rs=stmt.executeQuery();
@@ -111,9 +107,9 @@ public class IReservationDAOImplement implements IReservationDAO{
             stmt.setDate(5,r.getDate());
             stmt.setTime(6,r.getHeure());
             IClientDAO e=new IClientDAOImplement();
-            stmt.setInt(7,e.SelectIdOfClient(r.getClient()));//ici on cherche le client  dans BD s il existe  et on retourne son id
+            stmt.setInt(7,e.getIdFromDB(r.getClient()));//ici on cherche le client  dans BD s il existe  et on retourne son id
             IConducteurDAO cond=new IConducteurDAOImplement();
-            stmt.setInt(8,cond.SelectIdOfConducteur(r.getConducteur()));//ici on cherche le conducteur  dans BD s il existe  et on retourne son id
+            stmt.setInt(8,cond.getIdFromDB(r.getConducteur()));//ici on cherche le conducteur  dans BD s il existe  et on retourne son id
             stmt.setString(9,r.getConducteur().getTaxi().getMatricule());//la meme chose ici
             int l=stmt.executeUpdate();
            if( l>0)

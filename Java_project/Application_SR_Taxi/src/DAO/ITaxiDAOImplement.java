@@ -44,57 +44,8 @@ public class ITaxiDAOImplement implements ITaxiDAO {
         return t;
     }
 
-    @Override
-    public Taxi SelectTaxiAleatoire() {
-         conn=null;
-         stmt=null;
-         rs =null;
-        Taxi t=new Taxi();
-        try{
-            conn=ConnectionDB.getConnexion();
-            String sql= "SELECT TOP 1 * FROM taxi ORDER BY NEWID()";//pour selectionner un taxi aleatoirement
-             stmt=conn.prepareStatement(sql);
-             rs=stmt.executeQuery();
-             while(rs.next())
-             {
-                 t.setMatricule(rs.getString("matricule"));
-                 t.setModele(rs.getString("modele"));
-                 t.setStatus(rs.getString("status"));
-             }
 
 
-        }catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return t;
-    }
-
-    @Override
-    public List <Taxi> SelectTaxisDispo() {
-        conn=null;
-        stmt=null;
-        rs =null;
-        Taxi t=new Taxi();
-        List <Taxi> taxis=new ArrayList<>();
-        try{
-            conn=ConnectionDB.getConnexion();
-            String sql= "SELECT * FROM taxi WHERE status = ?";
-            stmt=conn.prepareStatement(sql);
-            stmt.setString(1,"Disponible");
-            rs=stmt.executeQuery();
-            while(rs.next())
-            {
-                t.setMatricule(rs.getString("matricule"));
-                t.setModele(rs.getString("modele"));
-                t.setStatus(rs.getString("status"));
-                taxis.add(t);
-            }
-
-        }catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return taxis;
-    }
     public void UpdateTaxiStatus(Taxi t,String status)//modifie le status du taxi après la fin du reservation
     {
          conn=null;
@@ -117,6 +68,48 @@ public class ITaxiDAOImplement implements ITaxiDAO {
         }catch (SQLException e) {
             e.printStackTrace();
         }
+
+    }
+    //-------maria-------------
+    public String selectRandomMatricule() {
+        //utilisé lors de la inscription d'un nouveau conducteur il faut afffecter à lui un taxi qui n'a pas un conducteur avant
+        conn=null;
+        stmt=null;
+        rs=null;
+        String matricule="";
+        try {
+            conn=ConnectionDB.getConnexion();
+            stmt = conn.prepareStatement("SELECT TOP 1 matricule FROM taxi WHERE affectationConducteur = ? ORDER BY NEWID()");
+            stmt.setString(1, "Non");
+            rs = stmt.executeQuery();
+            while(rs.next()) {
+               matricule=rs.getString("matricule");
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return matricule;
+    }
+    //Lorsqu'un conducteur est inscrit , on lui affecte un taxi, dans ce cas nous devons change la colonne affecationConducteuur
+    public void updateTaxiAffectationConducteur(String matricule) {
+
+        //  Lorsque le conducteur est inscrit , le taxi est affecté donc on doit changer la col affecationConducteur
+        // pour indiquer que le taxi est déjà pris
+        try {
+
+            stmt = conn.prepareStatement("UPDATE taxi SET affectationConducteur = ? WHERE matricule = ?");
+            String oui="Oui";
+            stmt.setString(1, oui);
+            stmt.setString(2, matricule );
+            stmt.executeUpdate();
+            conn.commit();
+            System.out.println("affectationConducteur updated");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
     }
 }

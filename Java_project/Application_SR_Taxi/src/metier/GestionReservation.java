@@ -13,51 +13,58 @@ public class GestionReservation {
     public void effectuerReservation (Client client,String lieuSource ,String lieuDestination,String typePaiement){
         //ici avant d'effectuer la reservation du client il faut d'abord chercher les taxi dispo qui vont prendre cette reservation
         //ainsi il faut calculer  tarif en considerant la distance entre lieuSrc et dest
-        ITaxiDAO interTaxi=new ITaxiDAOImplement();
-        List<Taxi> taxis=new ArrayList<>();
-        taxis=interTaxi.SelectTaxisDispo();
+       // ITaxiDAO interTaxi=new ITaxiDAOImplement();
+       // List<Taxi> taxis=new ArrayList<>();
+        //taxis=interTaxi.SelectTaxisDispo();
         //affichage des taxis dipso ;
-        for (Taxi  t: taxis)
-        {
-            System.out.println(t);
-        }
+       // for (Taxi  t: taxis)
+       // {
+           // System.out.println(t);
+       // }
         //temporaire ( a supprimer apres) -----------
-        System.out.println("ecrivez le matricule du taxi de vous voulez reserver : ");
+       // System.out.println("ecrivez le matricule du taxi de vous voulez reserver : ");
         Scanner scanner = new Scanner(System.in);
-        String matriculeTaxi = scanner.nextLine();
 
-        //---------------
-        Taxi taxi=new Taxi();
-        taxi=interTaxi.SelectTaxiParMatricule(matriculeTaxi);
+
         IConducteurDAO interCond=new IConducteurDAOImplement();
-        Conducteur conducteur=new Conducteur();
-        conducteur=interCond.SelectConducteurOfTaxi(taxi);
-        //la fonction selectConducteurofTaxi est utilisé parceque quand le client choisis le taxi ( en se basant par ex sur le modèle du taxi souhaité)
-        Date dateActuelle = new java.sql.Date(System.currentTimeMillis());
-        Time heureActuelle = new java.sql.Time(System.currentTimeMillis());
-        double tarifMax=CalculerTarifEnFctDistance(lieuSource,lieuDestination);
-        Reservation res=new Reservation(client,conducteur, lieuSource, lieuDestination, tarifMax, typePaiement, dateActuelle, heureActuelle);
-        IReservationDAO interRes=new IReservationDAOImplement();
-        System.out.println("voilà votre  reservation vous voulez la confirmer ? ");
-        System.out.println(res.toString());
-        System.out.println("tapez (y) si oui /(n) si non \n");
-        String reponse=scanner.nextLine();
-        scanner.close();
-
-        if(Objects.equals(reponse, "y"))
+        int idConducteur=interCond.getRandomConducteur();
+        //test ici
+        if(idConducteur!=-1)
         {
-            interRes.InsertReservation(res);
-            //à faire:  ajoutez une colonne affecte a un conducteur  (true / false )
-            //ici je dois appeler la methode qui update le status du taxi du dispo vers reserve
-            //ainsi je dois calculer la periode  du trajet (donc le taxi est  reserve juste dans cette periode apres on fait update vers dispo)
+            Conducteur conducteur=new Conducteur();
+            conducteur=interCond.SelectConductParId(idConducteur);
+            Date dateActuelle = new java.sql.Date(System.currentTimeMillis());
+            Time heureActuelle = new java.sql.Time(System.currentTimeMillis());
+            double tarifMax=CalculerTarifEnFctDistance(lieuSource,lieuDestination);
+            Reservation res=new Reservation(client,conducteur, lieuSource, lieuDestination, tarifMax, typePaiement, dateActuelle, heureActuelle);
+            IReservationDAO interRes=new IReservationDAOImplement();
+            System.out.println("voilà votre  reservation vous voulez la confirmer ? ");
+            System.out.println(res.toString());
+            System.out.println("tapez (y) si oui /(n) si non \n");
+            String reponse=scanner.nextLine();
+            scanner.close();
+
+            if(Objects.equals(reponse, "y"))
+            {
+                interRes.InsertReservation(res);
+                ITaxiDAO interTaxi=new ITaxiDAOImplement();
+                interTaxi.UpdateTaxiStatus(conducteur.getTaxi(),"Occupe");
+                //à faire:  ajoutez une colonne affecte a un conducteur  (true / false )
+                //ici je dois appeler la methode qui update le status du taxi du dispo vers reserve
+                //ainsi je dois calculer la periode  du trajet (donc le taxi est  reserve juste dans cette periode apres on fait update vers dispo)
+
+            }
+            else
+            {
+                System.out.println("reservation annulé par vous ");
+
+            }
 
         }
-        else
+     else
         {
-            System.out.println("reservation annulé par vous ");
-
+            System.out.println("Ressayez plus tard tout les taxis sont reservés");
         }
-
 
 
     }

@@ -41,66 +41,8 @@ public class IClientDAOImplement implements  IClientDAO{
         return cl;
     }
 
-    @Override
-    public int SelectIdOfClient(Client c) {
 
-            int x=0;
-            try
-            {
-                conn = ConnectionDB.getConnexion();
-                String sql = "SELECT idClient FROM client WHERE  nom=? AND prenom=? AND telephone=? AND email=? AND password=?";
-                stmt = conn.prepareStatement(sql);
-                stmt.setString(1,c.getNom());
-                stmt.setString(2,c.getPrenom());
-                stmt.setString(3,c.getTelephone());
-                stmt.setString(4,c.getEmail());
-                stmt.setString(5,c.getPassword());
-                rs = stmt.executeQuery();
-                while(rs.next())
-                  x=rs.getInt("idClient");
-
-            }
-            catch (SQLException e)
-            {
-                e.printStackTrace();
-
-            }
-
-         return  x;
-    }
-
-    @Override
-    public void InsererClient(Client c) {
-       
-        try{
-            conn=ConnectionDB.getConnexion();
-            conn = ConnectionDB.getConnexion();
-            String sql = "INSERT INTO client (nom,prenom,telephone,email,password)  VALUES (?,?,?,?,?)";
-            stmt = conn.prepareStatement(sql);
-            //insertion
-            stmt.setString(1,c.getNom());
-            stmt.setString(2,c.getPrenom());
-            stmt.setString(3,c.getTelephone());
-            stmt.setString(4,c.getEmail());
-            stmt.setString(5,c.getPassword());
-            int insertion_reussie=stmt.executeUpdate();
-            if(insertion_reussie>0)
-            {
-                System.out.println("insertion du client reussie");
-            }
-            else
-            {
-                System.out.println("insertion du client echoue");
-
-            }
-
-
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-
-    }
-
+// -----------------------------partie  maria ----------------------------
     @Override
     public void register(Personne p) {
         try {
@@ -116,8 +58,6 @@ public class IClientDAOImplement implements  IClientDAO{
                 stmt.executeUpdate();
                 System.out.println("Inserted!");
 
-            } else if (isExistEmail(p.getEmail())) {
-                System.out.println("The email is already exists!!");
             }
 
         } catch (Exception e) {
@@ -132,6 +72,8 @@ public class IClientDAOImplement implements  IClientDAO{
         Pattern pattern = Pattern.compile(regexExpression);
         Matcher matcher = pattern.matcher(email);
         boolean m = matcher.find();
+        if(m==false)
+        {System.out.println("email invalid (i.e:exemple.exemple@mail.xx)");}
         return m;
     }
 
@@ -141,6 +83,8 @@ public class IClientDAOImplement implements  IClientDAO{
         Pattern pattern = Pattern.compile(regexExpression);
         Matcher matcher = pattern.matcher(password);
         boolean ma = matcher.find();
+        if(ma==false)
+        {System.out.println("password invalid (i.e:Mm$123");}
         return ma;
     }
 
@@ -148,17 +92,19 @@ public class IClientDAOImplement implements  IClientDAO{
     public boolean isExistEmail(String email) {
         boolean flag = false;
         try {
-            stmt = conn.prepareStatement("SELECT * FROM client WHERE email = ?");
+            stmt = conn.prepareStatement("SELECT COUNT(*) FROM client WHERE email = ?");
             stmt.setString(1, email);
             rs = stmt.executeQuery();
-            while (rs.next()) {
-                flag = true;
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                flag = (count > 0);
             }
-            rs.close();
-
-
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
+        }
+
+        if (flag) {
+            System.out.println("Email already exists!");
         }
 
         return flag;
@@ -202,10 +148,7 @@ public class IClientDAOImplement implements  IClientDAO{
             System.out.println("you are not connected");
         }
     }
-    public void logout() {
-        System.exit(0);
-        conn = null;
-    }
+
     public void updateTelephone(Personne p, String telephone) {
         if (conn != null && isExistEmail(p.getEmail())) {
             try {
@@ -258,5 +201,8 @@ public class IClientDAOImplement implements  IClientDAO{
         }
 
     }
-
+    public void logout() {
+        System.exit(0);
+        conn = null;
+    }
 }
