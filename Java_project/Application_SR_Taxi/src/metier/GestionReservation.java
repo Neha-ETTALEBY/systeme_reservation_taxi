@@ -10,25 +10,11 @@ import org.json.*;
 import com.google.gson.*;
 
 public class GestionReservation {
-    public void effectuerReservation (Client client,String lieuSource ,String lieuDestination,String typePaiement){
-        //ici avant d'effectuer la reservation du client il faut d'abord chercher les taxi dispo qui vont prendre cette reservation
-        //ainsi il faut calculer  tarif en considerant la distance entre lieuSrc et dest
-       // ITaxiDAO interTaxi=new ITaxiDAOImplement();
-       // List<Taxi> taxis=new ArrayList<>();
-        //taxis=interTaxi.SelectTaxisDispo();
-        //affichage des taxis dipso ;
-       // for (Taxi  t: taxis)
-       // {
-           // System.out.println(t);
-       // }
-        //temporaire ( a supprimer apres) -----------
-       // System.out.println("ecrivez le matricule du taxi de vous voulez reserver : ");
-        Scanner scanner = new Scanner(System.in);
+    public int effectuerReservation (Client client,String lieuSource ,String lieuDestination,String typePaiement){
 
 
         IConducteurDAO interCond=new IConducteurDAOImplement();
         int idConducteur=interCond.getRandomConducteur();
-        //test ici
         if(idConducteur!=-1)
         {
             Conducteur conducteur=new Conducteur();
@@ -38,27 +24,13 @@ public class GestionReservation {
             double tarifMax=CalculerTarifEnFctDistance(lieuSource,lieuDestination);
             Reservation res=new Reservation(client,conducteur, lieuSource, lieuDestination, tarifMax, typePaiement, dateActuelle, heureActuelle);
             IReservationDAO interRes=new IReservationDAOImplement();
-            System.out.println("voilà votre  reservation vous voulez la confirmer ? ");
-            System.out.println(res.toString());
-            System.out.println("tapez (y) si oui /(n) si non \n");
-            String reponse=scanner.nextLine();
-            scanner.close();
 
-            if(Objects.equals(reponse, "y"))
-            {
+            //insertion --------
                 interRes.InsertReservation(res);
                 ITaxiDAO interTaxi=new ITaxiDAOImplement();
                 interTaxi.UpdateTaxiStatus(conducteur.getTaxi(),"Occupe");
-                //à faire:  ajoutez une colonne affecte a un conducteur  (true / false )
-                //ici je dois appeler la methode qui update le status du taxi du dispo vers reserve
-                //ainsi je dois calculer la periode  du trajet (donc le taxi est  reserve juste dans cette periode apres on fait update vers dispo)
 
-            }
-            else
-            {
-                System.out.println("reservation annulé par vous ");
 
-            }
 
         }
      else
@@ -66,7 +38,7 @@ public class GestionReservation {
             System.out.println("Ressayez plus tard tout les taxis sont reservés");
         }
 
-
+      return idConducteur;
     }
     public double CalculerTarifEnFctDistance(String lieuSource,String lieuDestination)
     {
