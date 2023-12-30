@@ -4,8 +4,19 @@
       <root url="jar://$USER_HOME$/Downloads/sqljdbc_12.4.2.0_enu/sqljdbc_12.4/enu/jars/mssql-jdbc-12.4.2.jre8.jar!/" />
       <root url="jar://$PROJECT_DIR$/../../../Nouveau dossier/jar_files/gson-2.8.2.jar!/" />
       <root url="jar://$PROJECT_DIR$/../../../Nouveau dossier/jar_files (1)/json-20231013.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Nouveau dossier/jar_files2/jxmapviewer2-2.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Nouveau dossier/jar_files2/commons-logging-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Nouveau dossier/jar_files3/appframework-1.0.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Nouveau dossier/jar_files3/swing-worker-1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Nouveau dossier/jar_files4/filters-2.0.235.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Nouveau dossier/jar_files4/swing-worker-1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Nouveau dossier/jar_files4/swingx-1.6.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../../Nouveau dossier/jar_files5" />
+      <root url="jar://$PROJECT_DIR$/../../../Nouveau dossier/jar_files5/commons-logging-1.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Nouveau dossier/jar_files5/jxmapviewer2-1.3.1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/../../../Nouveau dossier/jar_files5" recursive="false" />
   </library>
 </component>

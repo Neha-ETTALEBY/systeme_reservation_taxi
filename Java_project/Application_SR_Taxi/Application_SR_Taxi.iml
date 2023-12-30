@@ -7,7 +7,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="mssql-jdbc-12.4.2.jre8" level="project" />
+    <orderEntry type="library" exported="" name="mssql-jdbc-12.4.2.jre8" level="project" />
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
@@ -19,6 +19,15 @@
         </SOURCES>
         <jarDirectory url="file://$USER_HOME$/Downloads/sqljdbc_12.4.2.0_enu/sqljdbc_12.4/enu/jars" recursive="false" />
         <jarDirectory url="file://$USER_HOME$/Downloads/sqljdbc_12.4.2.0_enu/sqljdbc_12.4/enu/jars" recursive="false" type="SOURCES" />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../Nouveau dossier/jar_files2/jxmapviewer2-2.8.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
       </library>
     </orderEntry>
   </component>
